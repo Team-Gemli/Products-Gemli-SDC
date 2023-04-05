@@ -1,0 +1,25 @@
+{
+  "name": "gemli-sdc-products-api",
+  "version": "1.0.0",
+  "description": "backend API for product page front end",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --config=jest.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Gemli/Products-Gemli-SDC.git"
+  },
+  "keywords": [
+    "sdc",
+    "gemli",
+    "products",
+    "api"
+  ],
+  "author": "Zach Timmerman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-Gemli/Products-Gemli-SDC/issues"
+  },
+  "homepage": "https://github.com/Team-Gemli/Products-Gemli-SDC#readme"
+}
