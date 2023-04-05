@@ -53,5 +53,3 @@ COPY styles(id, product_id, name, sale_price, original_price, default_style) FRO
 COPY related_products(id, current_product_id, related_product_id) FROM '/users/zach/Documents/sdc-data/related.csv' DELIMITER ',' CSV HEADER;
 COPY photos(id, style_id, url, thumbnail_url) FROM '/users/zach/Documents/sdc-data/photos.csv' DELIMITER ',' CSV HEADER;
 COPY skus(id, style_id, size, quantity) FROM '/users/zach/Documents/sdc-data/skus.csv' DELIMITER ',' CSV HEADER;
-
-SELECT * FROM skus;
