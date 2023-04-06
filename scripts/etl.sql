@@ -23,9 +23,9 @@ CREATE TABLE styles (
 
 CREATE TABLE features (
   id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products(id),
   name TEXT,
-  value TEXT,
-  product_id INT REFERENCES products(id)
+  value TEXT
 );
 
 CREATE TABLE related_products (
@@ -49,9 +49,8 @@ CREATE TABLE skus (
 );
 
 COPY products(id, name, slogan, description, category, default_price) FROM '/users/zach/Documents/sdc-data/product.csv' DELIMITER ',' CSV HEADER;
+COPY features(id, product_id, name, value) FROM '/users/zach/Documents/sdc-data/features.csv' DELIMITER ',' CSV HEADER;
 COPY styles(id, product_id, name, sale_price, original_price, default_style) FROM '/users/zach/Documents/sdc-data/styles.csv' DELIMITER ',' CSV HEADER;
 COPY related_products(id, current_product_id, related_product_id) FROM '/users/zach/Documents/sdc-data/related.csv' DELIMITER ',' CSV HEADER;
 COPY photos(id, style_id, url, thumbnail_url) FROM '/users/zach/Documents/sdc-data/photos.csv' DELIMITER ',' CSV HEADER;
 COPY skus(id, style_id, size, quantity) FROM '/users/zach/Documents/sdc-data/skus.csv' DELIMITER ',' CSV HEADER;
-
-SELECT * FROM skus;
