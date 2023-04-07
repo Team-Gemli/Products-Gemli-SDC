@@ -12,6 +12,7 @@ module.exports = {
       })
       .catch(err => {
         console.log('unable to retrieve products from database, error:', err);
+        res.status(400).end();
       })
   },
   getOne: (req, res) => {
@@ -22,12 +23,27 @@ module.exports = {
       })
       .catch(err => {
         console.log('unable to retrieve the product from the database', err);
+        res.status(400).end();
       })
   },
   getStyles: (req, res) => {
-
+    Models.products.getStyles(req.params.product_id)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log('unable to retrieve product styles from database', err);
+        res.status(400).end();
+      })
   },
   getRelated: (req, res) => {
-
+    Models.products.getRelated(req.params.product_id)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log('unable to retrieve related products from database', err);
+        res.status(400).end();
+      })
   }
 }

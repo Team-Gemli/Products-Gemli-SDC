@@ -7,9 +7,16 @@ router.get('/', (req, res) => {
   res.send('hai');
 })
 
+/*
+--- Products ---
+*/
 router.get('/products', controller.products.get);
 router.get('/products/:id', controller.products.getOne);
 router.get('/products/:product_id/styles', controller.products.getStyles);
 router.get('/products/:product_id/related', controller.products.getRelated);
+
+/*
+--- Cart ---
+*/
 
 module.exports = router;
