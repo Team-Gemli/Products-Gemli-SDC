@@ -19,15 +19,20 @@ module.exports = {
       })
   },
   getStyles: (productId) => {
-    return db.query(`SELECT s.id AS style_id, s.name, s.original_price, NULLIF(s.sale_price, 'null') AS sale_price, s.default_style AS "default?", json_agg(json_build_object('thumbnail_url', p.thumbnail_url, 'url', p.url)) AS photos, json_object_agg(sk.id, json_build_object('quantity', sk.quantity, 'size', sk.size)) AS skus
+    return db.query(`SELECT s.id AS style_id, s.name, s.original_price, NULLIF(s.sale_price, 'null') AS sale_price, s.default_style AS "default?",
+      (SELECT json_agg(json_build_object('url', url, 'thumbnail_url', thumbnail_url))
+      FROM photos p
+      WHERE p.style_id = s.id) AS photos,
+      json_object_agg(sk.id, json_build_object('quantity', sk.quantity, 'size', sk.size)) AS skus
     FROM styles s
-      INNER JOIN photos p ON s.id = p.style_id
       INNER JOIN skus sk ON s.id = sk.style_id
-      WHERE s.product_id = $1 GROUP BY s.id`, [productId])
+    WHERE s.product_id = $1
+    GROUP BY s.id, s.name, s.original_price, s.sale_price, s.default_style;
+    `, [productId])
       .then(res => {
         // console.log('response:', res.rows);
         return res.rows;
-      })
+      }) //SELECT s.id AS style_id, s.name, s.original_price, NULLIF(s.sale_price, 'null') AS sale_price, s.default_style as "default?", json_agg(json_build_object('url', p.url, 'thumbail_url', p.thumbnail_url)) as photos FROM styles s INNER JOIN photos p ON s.id = p.style_id WHERE s.product_id = 1 GROUP BY s.id;
   },
   getRelated: (productId) => {
     return db.query('SELECT json_agg(related_product_id) FROM related_products WHERE current_product_id = $1', [productId])
