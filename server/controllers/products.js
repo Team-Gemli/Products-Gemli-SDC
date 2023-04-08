@@ -29,7 +29,10 @@ module.exports = {
   getStyles: (req, res) => {
     Models.products.getStyles(req.params.product_id)
       .then(data => {
-        res.send(data);
+        res.send({
+          product_id: req.params.product_id,
+          results: data
+        });
       })
       .catch(err => {
         console.log('unable to retrieve product styles from database', err);

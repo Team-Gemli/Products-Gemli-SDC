@@ -9,6 +9,9 @@ const port = process.env.PORT || 3000;
 app.use(morgan('dev'));
 app.use('/', routes)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Currently listening on port ${port}`);
 })
+
+app.server = server;
+module.exports = app;
