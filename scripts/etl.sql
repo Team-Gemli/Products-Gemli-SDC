@@ -21,6 +21,8 @@ CREATE TABLE styles (
   default_style BOOLEAN
 );
 
+CREATE INDEX ON styles(product_id);
+
 CREATE TABLE features (
   id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products(id),
@@ -28,11 +30,15 @@ CREATE TABLE features (
   value TEXT
 );
 
+CREATE INDEX ON features(product_id);
+
 CREATE TABLE related_products (
   id SERIAL PRIMARY KEY,
   current_product_id INT REFERENCES products(id),
   related_product_id INT
 );
+
+CREATE INDEX ON related_products(current_product_id);
 
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
@@ -41,12 +47,16 @@ CREATE TABLE photos (
   thumbnail_url TEXT
 );
 
+CREATE INDEX ON photos(style_id);
+
 CREATE TABLE skus (
   id SERIAL PRIMARY KEY,
   style_id INT REFERENCES styles(id),
   size TEXT,
   quantity INT
 );
+
+CREATE INDEX ON skus(style_id);
 
 COPY products(id, name, slogan, description, category, default_price) FROM '/users/zach/Documents/sdc-data/product.csv' DELIMITER ',' CSV HEADER;
 COPY features(id, product_id, name, value) FROM '/users/zach/Documents/sdc-data/features.csv' DELIMITER ',' CSV HEADER;

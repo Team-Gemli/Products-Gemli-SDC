@@ -2,14 +2,25 @@ const db = require('../db/index.js');
 
 module.exports = {
   getAll: (page, count) => {
-    const offset = (page - 1) * count;
-    const values = [count, offset]
+    const first = (page - 1) * count + 1;
+    const last = page * count;
 
-    return db.query('SELECT * FROM products LIMIT $1 OFFSET $2', values)
+    // const query = {
+    //   name: 'GET Products',
+    //   text: 'SELECT * FROM products WHERE id BETWEEN $1 AND $2',
+    //   values: [first, last]
+    // }
+
+    return db.query('SELECT * FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id', [first, last])
       .then(res => {
         // console.log('response:', res.rows);
         return res.rows;
       })
+    // return db.query(query)
+    // .then(res => {
+    //   // console.log('response:', res.rows);
+    //   return res.rows;
+    // })
   },
   getOne: (productId) => {
     return db.query("SELECT p.id, p.name, p.description, p.category, p.default_price, json_agg(json_build_object('feature', f.name, 'value', f.value)) AS features FROM products p INNER JOIN features f ON p.id = f.product_id WHERE p.id = $1 GROUP BY p.id", [productId])
@@ -32,7 +43,7 @@ module.exports = {
       .then(res => {
         // console.log('response:', res.rows);
         return res.rows;
-      }) //SELECT s.id AS style_id, s.name, s.original_price, NULLIF(s.sale_price, 'null') AS sale_price, s.default_style as "default?", json_agg(json_build_object('url', p.url, 'thumbail_url', p.thumbnail_url)) as photos FROM styles s INNER JOIN photos p ON s.id = p.style_id WHERE s.product_id = 1 GROUP BY s.id;
+      })
   },
   getRelated: (productId) => {
     return db.query('SELECT json_agg(related_product_id) FROM related_products WHERE current_product_id = $1', [productId])
