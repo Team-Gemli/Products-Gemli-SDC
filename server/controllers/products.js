@@ -7,22 +7,22 @@ module.exports = {
 
     Models.products.getAll(page, count)
       .then(data => {
-        console.log('response:', data);
+        // console.log('response:', data);
         res.send(data);
       })
       .catch(err => {
-        console.log('unable to retrieve products from database, error:', err);
+        // console.log('unable to retrieve products from database, error:', err);
         res.status(400).end();
       })
   },
   getOne: (req, res) => {
     Models.products.getOne(req.params.id)
       .then(data => {
-        console.log('response:', data);
+        // console.log('response:', data);
         res.send(data);
       })
       .catch(err => {
-        console.log('unable to retrieve the product from the database', err);
+        // console.log('unable to retrieve the product from the database', err);
         res.status(400).end();
       })
   },
@@ -35,7 +35,7 @@ module.exports = {
         });
       })
       .catch(err => {
-        console.log('unable to retrieve product styles from database', err);
+        // console.log('unable to retrieve product styles from database', err);
         res.status(400).end();
       })
   },
@@ -45,7 +45,7 @@ module.exports = {
         res.send(data);
       })
       .catch(err => {
-        console.log('unable to retrieve related products from database', err);
+        // console.log('unable to retrieve related products from database', err);
         res.status(400).end();
       })
   }

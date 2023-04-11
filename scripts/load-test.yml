@@ -1,0 +1,16 @@
+config:
+  target: "http://localhost:3001"
+  phases:
+    - duration: 120
+      arrivalRate: 1000
+scenarios:
+  - name: "Loading product for page"
+    flow:
+      - get:
+          url: "/products?page=200000&count=5"
+      # - get:
+      #     url: "/products/999996"
+      # - get:
+      #     url: "/products/999996/styles"
+      # - get:
+      #     url: "/products/999996/related"
