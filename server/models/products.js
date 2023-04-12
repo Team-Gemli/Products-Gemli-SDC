@@ -1,17 +1,17 @@
 const db = require('../db/index.js');
 
 module.exports = {
-  getAll: (page, count) => {
+  getAll: (page = 1, count = 5) => {
     const first = (page - 1) * count + 1;
     const last = page * count;
 
     // const query = {
     //   name: 'GET Products',
-    //   text: 'SELECT * FROM products WHERE id BETWEEN $1 AND $2',
+    //   text: 'SELECT * FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id ASC',
     //   values: [first, last]
     // }
 
-    return db.query('SELECT * FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id', [first, last])
+    return db.query('SELECT id, name, slogan, description, category, default_price FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id ASC', [first, last])
       .then(res => {
         // console.log('response:', res.rows);
         return res.rows;

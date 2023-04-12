@@ -2,10 +2,10 @@ const Models = require('../models');
 
 module.exports = {
   get: (req, res) => {
-    const page = req.query.page || 1;
-    const count = req.query.count || 5;
+    // const page = req.query.page || 1;
+    // const count = req.query.count || 5;
 
-    Models.products.getAll(page, count)
+    Models.products.getAll(req.query.page, req.query.count)
       .then(data => {
         // console.log('response:', data);
         res.send(data);
