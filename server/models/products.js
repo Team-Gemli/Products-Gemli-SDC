@@ -5,22 +5,11 @@ module.exports = {
     const first = (page - 1) * count + 1;
     const last = page * count;
 
-    // const query = {
-    //   name: 'GET Products',
-    //   text: 'SELECT * FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id ASC',
-    //   values: [first, last]
-    // }
-
     return db.query('SELECT id, name, slogan, description, category, default_price FROM products WHERE id BETWEEN $1 AND $2 ORDER BY id ASC', [first, last])
       .then(res => {
         // console.log('response:', res.rows);
         return res.rows;
       })
-    // return db.query(query)
-    // .then(res => {
-    //   // console.log('response:', res.rows);
-    //   return res.rows;
-    // })
   },
   getOne: (productId) => {
     return db.query("SELECT p.id, p.name, p.description, p.category, p.default_price, json_agg(json_build_object('feature', f.name, 'value', f.value)) AS features FROM products p INNER JOIN features f ON p.id = f.product_id WHERE p.id = $1 GROUP BY p.id", [productId])
