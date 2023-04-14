@@ -1,11 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./controllers');
+require('dotenv').config();
 
 router.get('/', (req, res) => {
   console.log('test');
   res.send('hai');
 })
+
+/*
+--- LoaderIO ---
+*/
+
+router.get(`/${process.env.LOADERIO_KEY}.txt`, (req, res) => {
+  res.send(process.env.LOADERIO_KEY);
+});
 
 /*
 --- Products ---
